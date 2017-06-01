@@ -15,29 +15,43 @@ public class MontyHallProblemTest {
 
     @Test
     public void selectedMoneyBoxFirst() {
-        boolean result = new MontyHallProblem().switchBox(FIRST, FIRST);
-        assertThat(result, is(false));
+        MontyHallProblem montyHallProblem = new MontyHallProblem();
+        montyHallProblem.switchBox(FIRST, FIRST);
+        assertThat(montyHallProblem.getNumberOfWins(), is(0));
     }
 
     @Test
     public void didNotSelectMoneyBoxFirst1() {
-        boolean result = new MontyHallProblem().switchBox(FIRST, SECOND);
-        assertThat(result, is(true));
+        MontyHallProblem montyHallProblem = new MontyHallProblem();
+        montyHallProblem.switchBox(FIRST, SECOND);
+        assertThat(montyHallProblem.getNumberOfWins(), is(1));
     }
 
     @Test
     public void didNotSelectMoneyBoxFirst2() {
-        boolean result = new MontyHallProblem().switchBox(FIRST, THIRD);
-        assertThat(result, is(true));
+        MontyHallProblem montyHallProblem = new MontyHallProblem();
+        montyHallProblem.switchBox(FIRST, THIRD);
+        assertThat(montyHallProblem.getNumberOfWins(), is(1));
     }
 
     @Test
-    public void massTest() {
+    public void massTestWin() {
         MontyHallProblem montyHallProblem = new MontyHallProblem();
         for (int i = 0; i < 10000; i++) {
-            boolean result = montyHallProblem.switchBox(FIRST, SECOND);
-            assertThat(result, is(true));
+            montyHallProblem.switchBox(FIRST, SECOND);
+            montyHallProblem.switchBox(FIRST, THIRD);
         }
+        assertThat(montyHallProblem.getNumberOfWins(), is(montyHallProblem.getNumberOfSimulations()));
+
+    }
+
+    @Test
+    public void massTestLoose() {
+        MontyHallProblem montyHallProblem = new MontyHallProblem();
+        for (int i = 0; i < 10000; i++) {
+            montyHallProblem.switchBox(FIRST, FIRST);
+        }
+        assertThat(montyHallProblem.getNumberOfWins(), is(0));
 
     }
 }
